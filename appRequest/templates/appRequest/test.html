@@ -1,0 +1,121 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <title>Company Info</title>
+</head>
+<body>
+    <div class="container text-center" >
+        <h2>Company Info</h2>
+        <div class="container">
+        
+        <form method="post" id="personForm" data-companies-url="/ajax/load-companies/" class="border">
+            <div class="row g-3">
+            <div class="col-md-2">
+                <input type="text" name="firstname" class="form-control" placeholder="First name" aria-label="firstname" id="firstname" required>
+                </div>
+            
+            
+                <div class="col-md-2">
+                <input type="text" name="lastname" class="form-control" placeholder="Last name" aria-label="lastname" id="lastname" required>
+                </div>
+            </div>
+            <br>
+
+            <div class="col-md-4">
+                <input type="email" class="form-control" placeholder="Email" aria-label="Email" id="inputEmail4">
+            </div>
+            <br>
+            
+            <div class="row g-3">
+            <div class="col-md-3">
+            <input type="text" name="phone_number_0" size="13" class="form-control" placeholder="Phone number" aria-label="Phone number" required id="id_phone_number_0">
+            </div>
+            <div class="col-md-2">
+            <input type="text" name="phone_number_1" size="4" class="form-control" placeholder="ext." aria-label="ext." id="id_phone_number_1"> 
+            
+            </div>
+            </div>
+            <br>
+
+            <div class="col-md-4">
+                <div class="input-group mb-3">
+                    <select class="form-select" name="country" id="id_country">
+                      <option selected>Choose...</option>
+                      <option value="1">Afghanistan</option>
+                      <option value="2">Albania</option>
+                      <option value="3">Algeria</option>
+                      <option value="4">Egypt</option>
+                    </select>
+                    <label class="input-group-text" for="id_country">Operation Countries</label>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                 <div class="input-group mb-3">
+                    <select class="form-select" name="company" id="id_company">
+                      <option selected>Choose...</option>
+                    </select>
+                    <label class="input-group-text" for="id_company">Company name</label>
+                  </div>
+                </div>
+
+
+            <div class="col-md-4">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Objective" aria-label="Objective" name="objective" maxlength="100" required id="id_objective">
+                </div>
+
+                <br>
+            <div class="input-group">
+                <textarea class="form-control" placeholder="Description" aria-label="Description"></textarea>
+              </div>
+            </div>
+                    
+            <button type="submit" class="btn btn-primary">Request an appointment</button>
+        </form>
+    
+    </div>
+        <br>
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <a class="btn btn-light" href="/">Back</a>
+          </div>
+          
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script>
+            $("#id_country").change(function () {
+                const url = $("#personForm").attr("data-companies-url");  // get the url of the `load_cities` view
+                const countryId = $(this).val();  // get the selected country ID from the HTML input
+
+                $.ajax({                       // initialize an AJAX request
+                    url: url,                    // set the url of the request (= /persons/ajax/load-cities/ )
+                    data: {
+                        'country_id': countryId       // add the country id to the GET parameters
+                    },
+                    success: function (data) {   // `data` is the return of the `load_cities` view function
+                        $("#id_company").html(data);  // replace the contents of the city input with the data that came from the server
+                        /*
+
+                        let html_data = '<option value="">---------</option>';
+                        data.forEach(function (city) {
+                            html_data += `<option value="${city.id}">${city.name}</option>`
+                        });
+                        console.log(html_data);
+                        $("#id_city").html(html_data);
+
+                        */
+                    }
+                });
+
+            });
+        </script>
+</div>
+</body>
+</html>
